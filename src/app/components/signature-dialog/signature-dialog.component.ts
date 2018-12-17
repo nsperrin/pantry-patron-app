@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-signature-dialog',
@@ -7,8 +8,17 @@ import { Component } from '@angular/core';
 })
 export class SignatureDialogComponent {
   public signature
+  public date = new FormControl('');
+
+  ngOnInit(){
+    this.date.valueChanges.subscribe(date =>{
+      this.signature = {...this.signature, date}
+      console.log(this.signature);
+    });
+  }
 
   saveSignature(signature){
-    this.signature = signature;
+    this.signature = {...this.signature, signature};
+    console.log(this.signature);
   }
 }

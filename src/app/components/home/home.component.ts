@@ -7,6 +7,7 @@ import { DeleteConfirmationDialogComponent } from '../delete-confirmation-dialog
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 import * as _ from 'lodash';
+import { parse } from 'date-fns';
 
 @Component({
   selector: 'app-home',
@@ -66,8 +67,7 @@ export class HomeComponent implements OnInit {
     const dialogRef = this.dialog.open(SignatureDialogComponent);
     this.subscriptions.add(dialogRef.afterClosed().subscribe(signature => {
       if(signature){
-        const date = Date.now();
-        this.patronService.addVisit(patron, {signature, date})
+        this.patronService.addVisit(patron, {...signature, date: signature.date})
       }
     }));
   }

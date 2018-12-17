@@ -1,6 +1,10 @@
 <h2 mat-dialog-title>Sign For Your Visit</h2>
 <mat-dialog-content class="mat-typography">
   <app-signature (stroke)="saveSignature($event)"></app-signature>
+  <mat-form-field>
+    <mat-label>Today's Date</mat-label>
+    <input matInput [formControl]="date" type="date"/>
+  </mat-form-field>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
   <button mat-button mat-dialog-close>Cancel</button>
