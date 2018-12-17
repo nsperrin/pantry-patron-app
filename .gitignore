@@ -4,6 +4,7 @@
 /dist
 /tmp
 /out-tsc
+/release-builds
 
 # dependencies
 /node_modules
@@ -36,6 +37,7 @@ speed-measure-plugin.json
 npm-debug.log
 yarn-error.log
 testem.log
+patrons.db
 /typings
 
 # System Files

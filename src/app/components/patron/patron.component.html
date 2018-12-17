@@ -1,0 +1,172 @@
+<button routerLink="/" class="link return-home"><fa-icon [icon]="['fas', 'chevron-left']"></fa-icon> Go Back</button>
+<form [formGroup]="form">
+  <div formGroupName="personal" class="fieldset" id="contact-info">
+    <h1><span>Food Assistance Application Form</span></h1>
+    
+    <mat-form-field>
+      <mat-label>Name</mat-label>
+      <input matInput formControlName="name" type="text"/>
+      <mat-error *ngIf="nameControl.hasError('required')">
+        Name is <strong>required</strong>
+      </mat-error>    
+    </mat-form-field>
+    
+    <mat-form-field>
+      <mat-label>Date of Birth</mat-label>
+      <input matInput formControlName="dob" type="date"/>
+      <mat-error *ngIf="dobControl.hasError('required')">
+        Date of Birth of is <strong>required</strong>
+      </mat-error>    
+    </mat-form-field>
+    
+    <mat-form-field>
+      <mat-label>Phone Number</mat-label>
+      <input matInput formControlName="phone" type="text"/>
+      <mat-error *ngIf="phoneControl.hasError('required')">
+        Phone Number is <strong>required</strong>
+      </mat-error>    
+    </mat-form-field>
+    
+    <mat-form-field>
+      <mat-label>Address</mat-label>
+      <input matInput formControlName="address" type="text"/>
+      <mat-error *ngIf="addressControl.hasError('required')">
+        Address is <strong>required</strong>
+      </mat-error>    
+    </mat-form-field>
+    
+    <mat-form-field>
+      <mat-label>City</mat-label>
+      <input matInput formControlName="city" type="text"/>
+      <mat-error *ngIf="cityControl.hasError('required')">
+        City is <strong>required</strong>
+      </mat-error>    
+    </mat-form-field>
+    
+    <mat-form-field>
+      <mat-label>State</mat-label>
+      <input matInput formControlName="state" type="text"/>
+      <mat-error *ngIf="stateControl.hasError('required')">
+        State is <strong>required</strong>
+      </mat-error>    
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>ZIP</mat-label>
+      <input matInput formControlName="zip" type="text"/>
+      <mat-error *ngIf="zipControl.hasError('required')">
+        ZIP is <strong>required</strong>
+      </mat-error>    
+    </mat-form-field>
+  </div>
+
+  <div formGroupName="ethnicity" class="fieldset">
+    <h1><span>Race/Ethnic Data (for statistical purposes only)</span></h1>
+    
+    <mat-checkbox formControlName="black">Black</mat-checkbox>
+    <mat-checkbox formControlName="white">White</mat-checkbox>
+    <mat-checkbox formControlName="asian">Asian</mat-checkbox>
+    <mat-checkbox formControlName="hispanic">Hispanic</mat-checkbox>
+    <mat-checkbox formControlName="amIndian">Am. Indian/Alaskan Native</mat-checkbox>
+    <mat-checkbox formControlName="pacific">Native Hawaiian/Pacific Island</mat-checkbox>
+    <mat-checkbox formControlName="other">
+      <mat-form-field>
+        <mat-label>Other</mat-label>
+        <input matInput formControlName="otherValue" type="text"/>
+      </mat-form-field>
+    </mat-checkbox>
+  </div>
+
+  <div formGroupName="proofOfSelf" class="fieldset">
+    <h1><span>Proof of Address/Picture ID (must have at least one of each document)</span></h1>
+    <div class="row">
+      <div class="fieldset">
+        <h1><span>ID</span></h1>
+        <mat-radio-group formControlName="proofOfIdentity">
+          <mat-radio-button value="stateID">State ID</mat-radio-button>
+          <mat-radio-button value="drivers">Driver's License</mat-radio-button>
+          <mat-radio-button value="other">
+            <mat-form-field>
+              <mat-label>Other</mat-label>
+              <input matInput formControlName="proofOfIdentityOtherValue" type="text"/>
+            </mat-form-field>
+          </mat-radio-button>
+        </mat-radio-group>
+      </div>
+      <div class="fieldset">
+        <h1><span>Proof Address</span></h1>
+        <mat-radio-group formControlName="proofOfAddress">
+          <mat-radio-button value="utilityBill">Utility Bill</mat-radio-button>
+          <mat-radio-button value="bankStatement">Bank Statement</mat-radio-button>
+          <mat-radio-button value="medicalCard">Medical Card</mat-radio-button>
+          <mat-radio-button value="payStub">Pay Stub</mat-radio-button>
+          <mat-radio-button value="other">
+            <mat-form-field>
+              <mat-label>Other</mat-label>
+              <input matInput formControlName="proofOfAddressOtherValue" type="text"/>
+            </mat-form-field>
+          </mat-radio-button>
+        </mat-radio-group>
+      </div>
+    </div>
+  </div>
+  <div formGroupName="eligibility" class="fieldset">
+    <h1><span>Determination of Eligibility</span></h1>
+    <div class="row">
+      <div formGroupName="sectionA" class="fieldset">
+        <h1><span>Section A: Qualifying Program Participation</span></h1>
+        <p>If all members of the household received benefits from any one of the qualifying programs listed below they are automaticallt eligible for benfits under the Emergency Food Assitance Program. Select the appropriate box to indicated which program you are participating in:</p>
+        <mat-radio-group class="column">
+          <mat-radio-button formContrlName="proofOfParticipation" value="foodStamps">Food Stamps</mat-radio-button>
+          <mat-radio-button formContrlName="proofOfParticipation" value="tanf">TANF (family independence)</mat-radio-button>
+          <mat-radio-button formContrlName="proofOfParticipation" value="ssi">SSI</mat-radio-button>
+        </mat-radio-group>
+        <h5>If no program is selected above, Section B must be completed.</h5>
+      </div>
+      <div formGroupName="sectionB" class="fieldset">
+        <h1><span>Section B: Income Eligibility</span></h1>
+        <p>If the household does not participate in one of the following qualifying programs listed in Section A, determine if the household income is at or below the income limit for the household members and total monthly gross income of all household members below:</p>
+        <mat-form-field>
+          <mat-label>Total Number of Members in Household</mat-label>
+          <input matInput formControlName="membersInHousehold" type="number"/>
+          <mat-error *ngIf="membersInHouseholdControl.hasError('required')">
+            Number of Members in Household is <strong>required</strong>
+          </mat-error>   
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Monthly Gross Income for Houshold</mat-label>
+          <input matInput formControlName="monthlyGrossIncome" type="number"/>
+          <mat-error *ngIf="monthlyGrossIncomeControl.hasError('required')">
+            Monthly Gross Income is <strong>required</strong>
+          </mat-error>   
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+  <div formArrayName="memberAges" class="fieldset">
+    <h1><span>Household Member Data</span></h1>
+    <ng-container *ngFor="let item of array(10); let i = index;">
+      <mat-form-field>
+        <mat-label>Member #{{i+1}} Age</mat-label>
+        <input matInput [formControlName]="i" type="number">
+      </mat-form-field>
+    </ng-container>
+  </div>
+  <div formGroupName="consent" class="fieldset">
+    <h1><span>Sign and Date</span></h1>
+    <div class="row">
+      <app-signature (stroke)="storeSignature($event)"></app-signature>
+      <div class="column">
+        <mat-form-field>
+          <mat-label>Today's Date</mat-label>
+          <input matInput formControlName="dateOfConsent" type="date"/>
+          <mat-error *ngIf="dateOfConsentControl.hasError('required') || dateOfConsentControl.hasError('valueIsToday')">
+            Today's Date is <strong>required</strong>
+          </mat-error>   
+        </mat-form-field>
+        <button mat-button type="button" routerLink="/" class="red">Cancel</button>
+        <button mat-button type="button" [disabled]="!signature || form.invalid" class="save" (click)="save()">Save</button>
+      </div>
+    </div>
+  </div>
+</form>

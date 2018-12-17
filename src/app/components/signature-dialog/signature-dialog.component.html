@@ -1,0 +1,8 @@
+<h2 mat-dialog-title>Sign For Your Visit</h2>
+<mat-dialog-content class="mat-typography">
+  <app-signature (stroke)="saveSignature($event)"></app-signature>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button [disabled]="!signature" mat-button [mat-dialog-close]="signature" cdkFocusInitial>Sign</button>
+</mat-dialog-actions>

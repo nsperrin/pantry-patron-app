@@ -1,1 +1,174 @@
 /* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; background-color: #efefef }
+
+.link{
+    background: none;
+    color: inherit;
+    border: none;
+    padding: 0;
+    font: inherit;
+    outline: inherit;
+    min-width: 10px;
+    cursor: pointer;
+}
+
+.red{
+    color: #ff4033
+}
+
+.blue{
+    color: rgb(66, 133, 244)
+}
+
+.purple{
+    color: #cf40cf
+}
+
+.column{
+    display:flex;
+    flex-direction: column;
+}
+
+.mat-form-field, .mat-radio-button, .mat-checkbox {
+    margin: .5em;
+}
+
+canvas{
+  width:500px;
+  height:200px;
+}
+
+form{
+  margin-top: 3em;
+}
+
+.save{
+  border: none;
+  background-color: rgb(66, 133, 244);
+  color: white;
+}
+
+.clear-consent{
+    color: #ff4081;
+    position: absolute;
+}
+
+.return-home{
+    margin: 5px -20px;
+    font-weight: 600pt;
+    position: absolute;
+    top:5px;
+    left:27px;
+
+    fa-icon{
+        color: #ff4081 
+    }
+}
+
+
+.row{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+
+    .fieldset{
+        display: flex;
+        flex-direction: column;
+        max-width: 45vw;
+        min-width: 45vw;
+    }
+}
+
+.column{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+
+   & > label{
+        font-size: .75em;
+        color: #555;
+    }
+
+    & > span{
+        font-size: 1em;
+        color: #000;
+    }
+
+    & > .column{
+        &:first-child{
+            margin-top: .5em;
+        }
+
+        margin-bottom: .5em;
+    }
+}
+
+.fieldset {
+    border: 2px groove threedface;
+    border-top: none;
+    padding: 0.5em;
+    margin: 1em 2px;
+  }
+  
+  .fieldset>h1 {
+    font: 1em normal;
+    margin: -1em -0.5em 0;
+  }
+  
+  .fieldset>h1>span {
+    float: left;
+  }
+  
+  .fieldset>h1:before {
+    border-top: 2px groove threedface;
+    content: ' ';
+    float: left;
+    margin: 0.5em 2px 0 -1px;
+    width: 0.75em;
+  }
+  
+  .fieldset>h1:after {
+    border-top: 2px groove threedface;
+    content: ' ';
+    display: block;
+    height: 1.5em;
+    left: 2px;
+    margin: 0 1px 0 0;
+    overflow: hidden;
+    position: relative;
+    top: 0.5em;
+  }
+
+  table {
+    width: 100%;
+  }
+  
+  tr.detail-row {
+    height: 0;
+  }
+  
+  tr.element-row:not(.expanded-row):hover {
+    background: #f5f5f5;
+  }
+  
+  tr.element-row:not(.expanded-row):active {
+    background: #efefef;
+  }
+  
+  .element-row td {
+    border-bottom-width: 0;
+  }
+  
+  .element-detail {
+    display: flex;
+  }
+
+  .element-row:not(.expanded-row) + tr{
+    display: none;
+  }
+
+  .full-width{
+      width: 100%
+  }

@@ -1,0 +1,8 @@
+<h2 mat-dialog-title>Delete Patron</h2>
+<mat-dialog-content class="mat-typography">
+  <span>Are you sure You want to remove {{data.patron}} from the system?</span>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button [mat-dialog-close]="false" cdkFocusInitial>Cancel</button>
+  <button mat-button [mat-dialog-close]="true" color="warn">Delete</button>
+</mat-dialog-actions>
