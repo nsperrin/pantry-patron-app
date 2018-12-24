@@ -90,4 +90,8 @@ export class HomeComponent implements OnInit {
   applyFilter(filterValue: string) {
     this.patrons.filter = filterValue.trim().toLowerCase();
   }
+
+  trackById(index, item) {
+    return item._id;
+  }
 }

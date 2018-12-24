@@ -1,11 +1,13 @@
 import { Component, AfterViewInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { DatePipe } from '@angular/common';
-import { FormBuilder, FormGroup, Validators, ValidatorFn } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ValidatorFn, FormArray } from '@angular/forms';
 import { PatronService } from '../../services/patron/patron.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { switchMap, map } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
 import { isToday } from 'date-fns';
+import { MatChipInputEvent } from '@angular/material';
+import {COMMA, ENTER} from '@angular/cdk/keycodes';
 
 @Component({
   selector: 'app-patron',
@@ -23,9 +25,12 @@ export class PatronComponent implements OnDestroy, AfterViewInit {
   public zipControl;
   public membersInHouseholdControl;
   public monthlyGrossIncomeControl;
+  public memberAgesControl;
+  public authorizedPickupsControl;
   public dateOfConsentControl;
   public signature;
 
+  readonly separatorKeysCodes: number[] = [ENTER, COMMA];
   private datePipe = new DatePipe(navigator.language)
   private patronData;
   private subscriptions = new Subscription();
@@ -37,7 +42,7 @@ export class PatronComponent implements OnDestroy, AfterViewInit {
   
 
   constructor(
-    fb: FormBuilder,
+    private fb: FormBuilder,
     private cd: ChangeDetectorRef,
     private router: Router,
     private route: ActivatedRoute,
@@ -73,11 +78,12 @@ export class PatronComponent implements OnDestroy, AfterViewInit {
           proofOfParticipation: ['']
         }),
         sectionB: fb.group({
-          membersInHousehold: ['', Validators.required],
+          membersInHousehold: [1, Validators.required],
           monthlyGrossIncome: ['', Validators.required]
         })
       }),
-      memberAges: fb.array(['','','','','','','','','','']),
+      memberAges: fb.array(['']),
+      authorizedPickups: fb.array([]),
       consent: fb.group({
         dateOfConsent: [this.currentDate(), Validators.required, this.valueIsToday()]
       })
@@ -96,6 +102,9 @@ export class PatronComponent implements OnDestroy, AfterViewInit {
     this.membersInHouseholdControl = housholdGroup.controls['membersInHousehold'];
     this.monthlyGrossIncomeControl = housholdGroup.controls['monthlyGrossIncome'];
 
+    this.memberAgesControl = this.form.controls['memberAges'] as FormArray;
+    this.authorizedPickupsControl = this.form.controls['authorizedPickups'] as FormArray;
+
     const consent = this.form.controls['consent'] as FormGroup;
     this.dateOfConsentControl = consent.controls['dateOfConsent'];
 
@@ -106,23 +115,30 @@ export class PatronComponent implements OnDestroy, AfterViewInit {
     ).subscribe((data:any) => {
       this.patronData = data;
     }));
+
+    this.subscriptions.add(this.membersInHouseholdControl.valueChanges.subscribe((numberOfIndices) => {
+      while(this.memberAgesControl.length < numberOfIndices){
+        this.memberAgesControl.push(fb.control(''));
+      }
+      while(this.memberAgesControl.length > numberOfIndices){
+        this.memberAgesControl.removeAt(this.memberAgesControl.length -1);
+      }
+    }));
    }
 
   ngAfterViewInit(): void {
     if(this.patronData && this.patronData.length){
-      this.form.patchValue(this.patronData[0]);
+      const data = this.patronData[0];
+      this.form.patchValue(data);
+      this.authorizedPickupsControl = this.fb.array(data.authorizedPickups);
       this.cd.detectChanges();
     }
   }
 
   ngOnDestroy(){
     if(this.subscriptions){
-      this.subscriptions.unsubscribe
+      this.subscriptions.unsubscribe();
     }
-  }
-
-  array(n: number){
-    return Array(n);
   }
 
   save(){
@@ -139,6 +155,23 @@ export class PatronComponent implements OnDestroy, AfterViewInit {
   storeSignature(signature){
     this.signature = signature;
   }
+
+  addPickup(event: MatChipInputEvent, form: FormGroup): void {
+    const input = event.input;
+    const value = (event.value || '').trim();
+    if (value) {
+      this.authorizedPickupsControl.push(this.fb.control(value));
+    }
+    if (input) {
+      input.value = '';
+    }
+  }
+  
+  removePickup(index) {
+    if(this.authorizedPickupsControl.length >= index){
+      this.authorizedPickupsControl.removeAt(index);
+    }
+  }  
 
   private currentDate() {
     return this.datePipe.transform(new Date(), 'yyyy-MM-dd');

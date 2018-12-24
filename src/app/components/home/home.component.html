@@ -7,7 +7,7 @@
     <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
 </mat-form-field>
 
-<table mat-table [dataSource]="patrons" multiTemplateDataRows matSort class="mat-elevation-z8">
+<table mat-table [dataSource]="patrons" [trackBy]="trackById" multiTemplateDataRows matSort class="mat-elevation-z8">
     <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
         <td mat-cell *matCellDef="let patron"> {{patron.personal.name}} </td>
@@ -56,50 +56,54 @@
     <ng-container matColumnDef="expandedDetail">
         <td mat-cell *matCellDef="let patron" [attr.colspan]="columnsToDisplay.length">
             <div class="element-detail" [@detailExpand]="patron == expandedElement ? 'expanded' : 'collapsed'">
-                <div class="row full-width">
-
-                    <div class="column">
+                <div class="column full-width">
+                    <div class="row full-width">
                         <div class="column">
-                            <label>Date of Birth</label>
-                            <span>{{patron.personal.dob | date:'MM/dd/yyy'}}</span>
+                            <div class="column">
+                                <label>Date of Birth</label>
+                                <span>{{patron.personal.dob | date:'MM/dd/yyy'}}</span>
+                            </div>
+                            <div class="column">
+                                <label>Phone Number</label>
+                                <span>{{patron.personal.phone}}</span>
+                            </div>
                         </div>
                         <div class="column">
-                            <label>Phone Number</label>
-                            <span>{{patron.personal.phone}}</span>
+                            <div class="column">
+                                <label>Patron Since</label>
+                                <span>{{patron.dateOfCreation | date:'MM/dd/yyy'}}</span>
+                            </div>
+                            <div class="column">
+                                <label>Last Visit</label>
+                                <span>{{patron.visits | lastVisit}}</span>
+                            </div>
+                        </div>
+                        <div class="column">
+                            <div class="column">
+                                <label>Total Visits</label>
+                                <span>{{patron.visits.length}}</span>
+                            </div>
+                            <div class="column">
+                                <label>Days Untill Re-apply</label>
+                                <span>{{patron.consent.dateOfConsent | daysUntil}}</span>
+                            </div>
+                        </div>
+                        <div class="column">
+                            <div class="column">
+                                <label>Number in Family</label>
+                                <span>{{patron.eligibility.sectionB.membersInHousehold}}</span>
+                            </div>
+                            <div class="column">
+                                <label>Household Income</label>
+                                <span>{{patron.eligibility.sectionB.monthlyGrossIncome}}</span>
+                            </div>
                         </div>
                     </div>
-
                     <div class="column">
-                        <div class="column">
-                            <label>Patron Since</label>
-                            <span>{{patron.dateOfCreation | date:'MM/dd/yyy'}}</span>
-                        </div>
-                        <div class="column">
-                            <label>Last Visit</label>
-                            <span>{{patron.visits | lastVisit}}</span>
-                        </div>
-                    </div>
-
-                    <div class="column">
-                        <div class="column">
-                            <label>Total Visits</label>
-                            <span>{{patron.visits.length}}</span>
-                        </div>
-                        <div class="column">
-                            <label>Days Untill Re-apply</label>
-                            <span>{{patron.consent.dateOfConsent | daysUntil}}</span>
-                        </div>
-                    </div>
-
-                    <div class="column">
-                        <div class="column">
-                            <label>Number in Family</label>
-                            <span>{{patron.eligibility.sectionB.membersInHousehold}}</span>
-                        </div>
-                        <div class="column">
-                            <label>Houshold Income</label>
-                            <span>{{patron.eligibility.sectionB.monthlyGrossIncome}}</span>
-                        </div>
+                        <p *ngIf="patron.authorizedPickups">The following are authorized to apply and pickup food on behalf of {{patron.personal.name}}</p>
+                        <mat-chip-list class="full-width  bottom-pad" *ngIf="patron.authorizedPickups">
+                            <mat-chip disabled class="black-text" *ngFor="let pickup of patron.authorizedPickups">{{pickup}}</mat-chip>
+                        </mat-chip-list>
                     </div>
                 </div>
             </div>

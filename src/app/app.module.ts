@@ -7,6 +7,7 @@ import {
   MatSelectModule, MatRadioModule, 
   MatTableModule, MatDialogModule, 
   MatButtonModule, MatSortModule,
+  MatChipsModule, MatIconModule,
 } from '@angular/material';
 import { NgxElectronModule } from 'ngx-electron';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -53,7 +54,9 @@ library.add(fas, far);
     MatInputModule,
     MatCheckboxModule,
     MatDialogModule,
+    MatChipsModule,
     MatTableModule,
+    MatIconModule,
     MatButtonModule,
     MatSortModule,
     MatSelectModule,

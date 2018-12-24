@@ -63,5 +63,5 @@ app.on('activate', function () {
 })
 
 app.on('browser-window-created',function(e,window) {
-  window.setMenu(null);
+  // window.setMenu(null);
 });

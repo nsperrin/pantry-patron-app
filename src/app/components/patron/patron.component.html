@@ -128,7 +128,7 @@
         <p>If the household does not participate in one of the following qualifying programs listed in Section A, determine if the household income is at or below the income limit for the household members and total monthly gross income of all household members below:</p>
         <mat-form-field>
           <mat-label>Total Number of Members in Household</mat-label>
-          <input matInput formControlName="membersInHousehold" type="number"/>
+          <input matInput formControlName="membersInHousehold" type="number" min="1"/>
           <mat-error *ngIf="membersInHouseholdControl.hasError('required')">
             Number of Members in Household is <strong>required</strong>
           </mat-error>   
@@ -145,13 +145,34 @@
   </div>
   <div formArrayName="memberAges" class="fieldset">
     <h1><span>Household Member Data</span></h1>
-    <ng-container *ngFor="let item of array(10); let i = index;">
+    <ng-container *ngFor="let item of memberAgesControl.controls; let i = index;">
       <mat-form-field>
         <mat-label>Member #{{i+1}} Age</mat-label>
-        <input matInput [formControlName]="i" type="number">
+        <input matInput [formControlName]="i" type="number" min="0">
       </mat-form-field>
     </ng-container>
   </div>
+
+  <div class="fieldset">
+    <h1><span>The the following person(s) are authorized to recieve food on my behalf</span></h1>
+    <mat-form-field class="full-width">
+      <mat-chip-list #chipList formArrayName="authorizedPickups">
+        <mat-chip *ngFor="let name of authorizedPickupsControl.controls; let i=index;"
+          selectable="false"
+          removable="true"
+          (removed)="removePickup(i)">
+          <span>{{authorizedPickupsControl.controls[i].value}}</span>
+          <mat-icon matChipRemove>cancel</mat-icon>
+        </mat-chip>
+        <input placeholder="Names"
+          [matChipInputFor]="chipList"
+          [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+          [matChipInputAddOnBlur]="addOnBlur"
+          (matChipInputTokenEnd)="addPickup($event, asset)">
+      </mat-chip-list>
+    </mat-form-field>
+  </div>
+  
   <div formGroupName="consent" class="fieldset">
     <h1><span>Sign and Date</span></h1>
     <div class="row">

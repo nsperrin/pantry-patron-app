@@ -26,6 +26,12 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; background-
     color: #cf40cf
 }
 
+.slim{
+    min-width: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
 .column{
     display:flex;
     flex-direction: column;
@@ -171,4 +177,19 @@ form{
 
   .full-width{
       width: 100%
+  }
+
+  .from-start{
+      justify-content: flex-start;
+      & > *{
+          width: 100px;
+      }
+  }
+
+  .bottom-pad{
+      padding-bottom: 1em;
+  }
+
+  .black-text.mat-chip-disabled {
+    opacity: 1 !important;
   }
